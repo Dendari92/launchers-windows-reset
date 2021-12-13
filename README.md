@@ -16,6 +16,7 @@ Currently the script supports the following launchers:
 - Origin*
 - Playnite
 - Steam
+- Ubisoft Launcher
 
 *\* Some editing required to make it work.*
 
