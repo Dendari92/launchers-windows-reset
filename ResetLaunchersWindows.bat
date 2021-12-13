@@ -7,6 +7,7 @@ SET epicGamesConfigFolder=%LOCALAPPDATA%\EpicGamesLauncher\Saved\Config\Windows
 SET originConfigFolder=%APPDATA%\Origin
 SET playniteConfigFolder=%APPDATA%\Playnite
 SET steamConfigFolder=%PROGRAMFILES(x86)%\Steam\config
+SET ubisoftLauncherConfigFolder=%LOCALAPPDATA%\Ubisoft Game Launcher
 
 REM Setting launchers config files names, these can vary based on the way launchers create different config files for profile (or other parameters).
 SET battleNetConfigFile=xxxxx.config
@@ -16,6 +17,7 @@ SET epicGamesConfigFile=GameUserSettings.ini
 SET originConfigFile=local_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xml
 SET playniteConfigFile=windowPositions.json
 SET steamConfigFile=DialogConfig.vdf
+SET ubisoftLauncherConfigFile=settings.yaml
 
 REM Concat folders and files
 SET battleNetConfig=%battleNetConfigFolder%\%battleNetConfigFile%
@@ -25,6 +27,7 @@ SET epicGamesConfig=%epicGamesConfigFolder%\%epicGamesConfigFile%
 SET originConfig=%originConfigFolder%\%originConfigFile%
 SET playniteConfig=%playniteConfigFolder%\%playniteConfigFile%
 SET steamConfig=%steamConfigFolder%\%steamConfigFile%
+SET ubisoftLauncherConfig=%ubisoftLauncherConfigFolder%\%ubisoftLauncherConfigFile%
 
 REM Setting strings to look for and delete. NOTE: you want these to be as unique as possible or you'll end up resetting more than necessary!
 SET battleNetStrings=WindowPosition WindowSize
@@ -34,6 +37,7 @@ SET epicGamesStrings=MainLauncherWindow
 SET originStrings=AppSizePosition
 SET playniteStrings=\"X\": \"Y\":
 SET steamStrings=xpos ypos wide tall
+SET ubisoftLauncherStrings=height left top: width
 
 ECHO  ### ### ### ### ###
 ECHO # Starting reset... #
@@ -107,6 +111,16 @@ IF EXIST "%steamConfig%" (
 	ECHO - Steam config file reset.
 ) ELSE (
 	ECHO - Steam config file NOT found!!!
+)
+
+ECHO ---
+ECHO Ubisoft Launcher config file path: "%ubisoftLauncherConfig%"
+IF EXIST "%ubisoftLauncherConfig%" (
+	ECHO - Ubisoft Launcher config file found.
+	MOVE /Y "%ubisoftLauncherConfig%" "%ubisoftLauncherConfig%.backup" & findstr /V "%ubisoftLauncherStrings%" "%ubisoftLauncherConfig%.backup" > "%ubisoftLauncherConfig%"
+	ECHO - Ubisoft Launcher config file reset.
+) ELSE (
+	ECHO - Ubisoft Launcher config file NOT found!!!
 )
 
 ECHO ### ### ### ###
